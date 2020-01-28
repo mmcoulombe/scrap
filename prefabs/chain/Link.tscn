@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/chain/Link.png" type="Texture" id=1]
+
+[node name="Link" type="PinJoint2D"]
+bias = 0.9
+disable_collision = false
+softness = 0.1
+
+[node name="Sprite" type="Sprite" parent="."]
+rotation = 1.5708
+z_index = 1
+texture = ExtResource( 1 )

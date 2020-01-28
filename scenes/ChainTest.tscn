@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://prefabs/chain/Chain.tscn" type="PackedScene" id=1]
+[ext_resource path="res://prefabs/chain/Ball.tscn" type="PackedScene" id=2]
+
+[node name="ChainTest" type="Node2D"]
+position = Vector2( -1.43201, 0 )
+
+[node name="Chain" parent="." instance=ExtResource( 1 )]
+position = Vector2( 444.531, 100.746 )
+loop_count = 12
+
+[node name="Ball" parent="." instance=ExtResource( 2 )]
+position = Vector2( 313.602, 237.708 )

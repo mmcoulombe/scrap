@@ -1,0 +1,123 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://prefabs/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/Shaking.gd" type="Script" id=2]
+[ext_resource path="res://assets/intro_fg.png" type="Texture" id=4]
+[ext_resource path="res://assets/nuke_00.png" type="Texture" id=5]
+[ext_resource path="res://assets/bg_trash_mountait.png" type="Texture" id=6]
+[ext_resource path="res://assets/pipe_00.png" type="Texture" id=7]
+[ext_resource path="res://assets/bg_trash_mountait_light.png" type="Texture" id=8]
+[ext_resource path="res://assets/mist.png" type="Texture" id=9]
+[ext_resource path="res://prefabs/LightPole.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/fonts/LiberationSerif-Regular.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://scripts/DemoScene.gd" type="Script" id=12]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+render_mode blend_mul;
+
+uniform vec2 direction = vec2(1.0,-0.4);
+uniform float speed_scale = 0.02;
+
+void fragment(){
+
+     vec2 move = direction * TIME * speed_scale;
+
+     COLOR = texture(TEXTURE, UV + move);   
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/direction = Vector2( 1, -0.4 )
+shader_param/speed_scale = 0.02
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 45
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 11 )
+
+[node name="DemoScene" type="Node2D"]
+script = ExtResource( 12 )
+
+[node name="TrashMountain" type="Node2D" parent="."]
+position = Vector2( 960, 740 )
+
+[node name="Light" type="Sprite" parent="TrashMountain"]
+position = Vector2( -176.179, -194.725 )
+texture = ExtResource( 8 )
+
+[node name="Trash" type="Sprite" parent="TrashMountain"]
+texture = ExtResource( 6 )
+
+[node name="Pipe" type="Sprite" parent="."]
+position = Vector2( 1356.89, 148.362 )
+texture = ExtResource( 7 )
+
+[node name="nuke_00" type="Sprite" parent="."]
+position = Vector2( 163.379, 799.682 )
+texture = ExtResource( 5 )
+
+[node name="Mist" type="Sprite" parent="."]
+material = SubResource( 2 )
+position = Vector2( 956.842, 554.737 )
+scale = Vector2( 1.14755, 1.0073 )
+texture = ExtResource( 9 )
+
+[node name="Foreground" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="Sprite" type="Sprite" parent="Foreground"]
+position = Vector2( 960, 960 )
+texture = ExtResource( 4 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Foreground"]
+position = Vector2( 960, 960 )
+build_mode = 1
+polygon = PoolVector2Array( -302.7, -102, -295.7, -102, -274.8, -96, -242.8, -96, -241.8, -94, -89.4, -94, -78.4, -98, -63.2, -98, -17, -103.8, -17, -104.5, -4.29999, -108, 44.3, -108, 81.3, -96, 141, -96, 141, -96.8, 205, -101.9, 205, -102.5, 223.7, -108, 296, -108, 296, -106.5, 306, -103.5, 306, -102, 313.7, -96, 320.4, -96, 332, -91.4, 332, -89.6, 333.1, -88, 364.7, -88, 380, -90.3, 380, -87, 389, -28.2, 389, 64, 393, 124, -960, 124, -960, -116.5, -959.2, -118, -947.7, -118, -940, -115.4, -940, -114.1, -904.5, -94, -899.6, -94, -884.6, -88, -864, -88, -765, -86, -748.3, -92, -731.3, -92, -721, -93.7, -721, -94.4, -710.3, -98, -683.3, -98, -656.1, -102, -569.4, -102, -560.4, -106, -497, -106, -497, -106.7, -475, -109.8, -475, -110.5, -456.3, -116, -443, -116, -415.8, -124, -353.3, -124 )
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Foreground"]
+position = Vector2( 960, 960 )
+polygon = PoolVector2Array( 645, -87.5, 681.3, -77, 692.1, -77, 716, -74.8, 716, -72.8, 740.8, -48, 784.4, -48, 791.3, -45, 851.2, -45, 863, -42.6, 863, -41.4, 895, -28.3, 895, -27.1, 930.5, -7, 933.4, -7, 960, 4.3, 960, 114.4, 958, 124, 552, 124, 546.6, 110, 527, 95, 527, 82.3, 521, 63.3, 521, 30, 519.2, 17, 507, -11.6, 507, -35.2, 511.4, -57, 512.5, -57, 519.5, -83, 579.9, -83, 597, -87.5, 597, -89, 645, -89 )
+
+[node name="LightPole" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1343.82, 641.03 )
+rotation = 0.245713
+scale = Vector2( 0.344825, 0.344825 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 342.667, 760.573 )
+speed = Vector2( 200, 1400 )
+gravity = 400.0
+
+[node name="FPS" type="Label" parent="."]
+margin_left = 15.0
+margin_top = 15.0
+margin_right = 118.0
+margin_bottom = 51.0
+custom_fonts/font = SubResource( 3 )
+text = "FPS: xx"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 412.98
+margin_top = 694.701
+margin_right = 525.98
+margin_bottom = 744.701
+custom_fonts/font = SubResource( 4 )
+text = "Who am I ?"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
